@@ -20,9 +20,9 @@ class LRUCache(BaseCaching):
                 self.key_queue.remove(key)
             self.key_queue.append(key)
             if len(self.cache_data) >= self.MAX_ITEMS:
-                    learst_recent = self.key_queue.pop(0)
-                    print("DISCARD:", learst_recent)
-                    del self.cache_data[learst_recent]
+                learst_recent = self.key_queue.pop(0)
+                print("DISCARD:", learst_recent)
+                del self.cache_data[learst_recent]
             self.cache_data[key] = item
 
     def get(self, key):

@@ -9,7 +9,6 @@ class BasicCache(BaseCaching):
     inherits from BaseCaching that is a caching system
     """
 
-
     def put(self, key, item):
         """ adds items to cache """
         if key is not None and item is not None:
