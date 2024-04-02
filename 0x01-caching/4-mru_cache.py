@@ -18,7 +18,7 @@ class MRUCache(BaseCaching):
         if key is None or item is None:
             return
         if key not in self.cache_data:
-            if len(self.cache_data) + 1 > self.MAX_ITEMS:
+            if len(self.cache_data) + 1 > BaseCaching.MAX_ITEMS:
                 most_recent, _ = self.cache_data.popitem(False)
                 print("DISCARD:", most_recent)
             self.cache_data[key] = item
@@ -28,7 +28,6 @@ class MRUCache(BaseCaching):
 
     def get(self, key):
         """ gets item by key """
-        if key is not None:
-            if key in self.cache_data:
-                self.cache_data.move_to_end(key, last=False)
+        if key is not None and key in self.cache_data:
+            self.cache_data.move_to_end(key, last=False)
         return self.cache_data.get(key, None)
