@@ -28,5 +28,7 @@ class MRUCache(BaseCaching):
         """ gets item by key """
         if key is not None:
             if key in self.cache_data:
-                return self.cache_data[key]
+                value = self.cache_data.pop(key)
+                self.cache_data[key] = value
+                return value
         return None
