@@ -14,17 +14,22 @@ class MRUCache(BaseCaching):
 
     def put(self, key, item):
         """ adds items to cache """
-        if key and item:
-            if len(self.cache_data) >= BaseCaching.MAX_ITEMS:
-                most_recent = self.odereddict.pop()
-                self.cache_data.pop(most_recent)
-                print("DISCARD:", most_recent)
-            self.cache_data[key] = item
+        if key is None or item is None:
+            pass
+        else:
+            if len(self.cache_data) >= BaseCaching.MAX_ITEMS and key not in self.cache_data:
+                print("DISCARD: {}".format(self.odereddict[-1]))
+                del self.cache_data[self.odereddict[-1]]
+                del self.odereddict[-1]
+            if key in self.odereddict:
+                del self.odereddict[self.odereddict.index(key)]
             self.odereddict.append(key)
+            self.cache_data[key] = item
 
     def get(self, key):
         """ gets item by key """
-        if key in self.cache_data:
-            self.odereddict.remove(key)
+        if key is not None and key in self.cache_data.keys():
+            del self.odereddict[self.odereddict.index(key)]
             self.odereddict.append(key)
-            return self.cache_data.get(key)
+            return self.cache_data[key]
+        return None
