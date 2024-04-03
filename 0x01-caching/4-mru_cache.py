@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 
 """MRUCache """
 from base_caching import BaseCaching
@@ -24,7 +24,7 @@ class MRUCache(BaseCaching):
 
     def get(self, key):
         """ gets item by key """
-        if key is not None and key in self.cache_data:
+        if key in self.cache_data:
             self.odereddict.remove(key)
             self.odereddict.append(key)
             return self.cache_data.get(key)
