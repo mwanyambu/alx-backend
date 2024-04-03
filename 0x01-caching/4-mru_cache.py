@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 
 """MRUCache """
-from collections import OrderedDict
 from base_caching import BaseCaching
 
 
@@ -11,23 +10,21 @@ class MRUCache(BaseCaching):
     def __init__(self):
         """ initializes MRUCache """
         super().__init__()
-        self.cache_data = OrderedDict()
+        self.odereddict = []
 
     def put(self, key, item):
         """ adds items to cache """
-        if key is None or item is None:
-            return
-        if key not in self.cache_data:
-            if len(self.cache_data) + 1 > BaseCaching.MAX_ITEMS:
-                most_recent, _ = self.cache_data.popitem(False)
+        if key and item:
+            if len(self.cache_data) >= BaseCaching.MAX_ITEMS:
+                most_recent = self.odereddict.pop()
+                self.cache_data.pop(most_recent)
                 print("DISCARD:", most_recent)
             self.cache_data[key] = item
-            self.cache_data.move_to_end(key, last=False)
-        else:
-            self.cache_data[key] = item
+            self.odereddict.append(key)
 
     def get(self, key):
         """ gets item by key """
         if key is not None and key in self.cache_data:
-            self.cache_data.move_to_end(key, last=False)
-        return self.cache_data.get(key, None)
+            self.odereddict.remove(key)
+            self.odereddict.append(key)
+            return self.cache_data.get(key)
