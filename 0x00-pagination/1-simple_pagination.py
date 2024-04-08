@@ -24,7 +24,7 @@ class Server:
             self.__dataset = dataset[1:]
 
         return self.__dataset
-    
+
     def index_range(page: int, page_size: int):
         """
         takes two integer args and returns a tuple of size two
@@ -47,3 +47,4 @@ class Server:
         dataset = self.dataset()
 
         return dataset[startIndex:endIndex]
+    
