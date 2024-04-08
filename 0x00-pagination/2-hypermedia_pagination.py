@@ -67,5 +67,3 @@ class Server:
             "prev_page": prevPage,
             "total_pages": totalPages
         }
-
-        
