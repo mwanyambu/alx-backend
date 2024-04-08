@@ -56,5 +56,5 @@ class Server:
             "index": index,
             "next_index": nextIdx,
             "page_size": page_size,
-            "data": [dataset[i] for i in range(index, min(nextIdx, datasetTotal + 1))]
+            "data": [dataset.get(i) for i in range(index, nextIdx)]
         }
