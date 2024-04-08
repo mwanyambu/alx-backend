@@ -47,4 +47,3 @@ class Server:
         dataset = self.dataset()
 
         return dataset[startIndex:endIndex]
-    
