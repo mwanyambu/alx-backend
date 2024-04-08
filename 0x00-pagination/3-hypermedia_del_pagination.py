@@ -42,18 +42,19 @@ class Server:
     def get_hyper_index(self, index: int = None, page_size: int = 10) -> dict:
         """Get a dictionary with the following key-value pairs
         """
-        assert type(index) == int and type(page_size) == int
-        assert index >= 0 and index < len(self.dataset())
-        indexed_dataset = self.indexed_dataset()
-        dataset = []
-        i = index
-        while len(dataset) < page_size and i < len(indexed_dataset):
-            if i in indexed_dataset:
-                dataset.append(indexed_dataset[i])
-            i += 1
+        dataset = self.indexed_dataset()
+        datasetTotal = len(dataset)
+
+        assert index is None or (isinstance(index, int) and 0 <= index <= datasetTotal)
+
+        if index is None:
+            index = 0
+
+        nextIdx = min(index + page_size, datasetTotal + 1)
+
         return {
             "index": index,
-            "next_index": i,
+            "next_index": nextIdx,
             "page_size": page_size,
-            "data": dataset
+            "data": [dataset[i] for i in range(index, min(nextIdx, datasetTotal + 1))]
         }
